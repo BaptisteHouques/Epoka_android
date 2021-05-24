@@ -33,9 +33,10 @@ public class MainActivity extends Activity {
     }
 
     public void authentification(View view) throws JSONException {
+        //Récupère l'identifiant et le mot de passe entrés par l'utilisateur.
         EditText no = (EditText) findViewById(R.id.et_No);
         EditText mdp = (EditText) findViewById(R.id.et_mdp);
-
+        //Vérifie que l'identifiant et le mot de passe entrés ne sont pas vide.
         if (no.getText().toString().matches("")) {
             Toast.makeText(this, "Veuillez renseigner votre numéro", Toast.LENGTH_SHORT).show();
             return;
@@ -47,11 +48,14 @@ public class MainActivity extends Activity {
         }
 
         urlServiceWeb = "http://192.168.1.10/Epoka_Web/Services/connexion.php?user=" + no.getText() + "&mdp=" + mdp.getText();
+        // Récupère les données au format JSON avec la fonction prédéfinie.
         JSONObject resultat = getServerDataJson(urlServiceWeb);
 
+        //Si le service appelé revoi une erreur alors on affiche aussi une erreur.
         if(resultat.has("erreur")){
             Toast.makeText(this, "Numéro ou mot de passe incorect", Toast.LENGTH_SHORT).show();
             return;
+        //Sinon on passe à l'activité menu en envoyant l'id, le nom et le prenom de l'utilisateur.
         } else {
             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -62,7 +66,7 @@ public class MainActivity extends Activity {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
-
+    //Fonction de récupération des données du service.
     private JSONObject getServerDataJson(String urlString) throws JSONException {
         InputStream is = null;
         String result = "";

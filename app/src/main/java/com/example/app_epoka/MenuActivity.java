@@ -19,20 +19,21 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
         tv = (TextView) findViewById(R.id.tv_bonjour);
 
+        //Récupère l'id, le nom et le prénom de l'utilisateur.
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
         nom = intent.getStringExtra("nom");
         prenom = intent.getStringExtra("prenom");
         tv.append("Bonjour " + prenom + " " + nom);
     }
-
+    //Fonction pour passer à l'activité mission en envoyant l'id.
     public void btn_ajoutMission(View view){
         Intent intent = new Intent(getApplicationContext(), MissionActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
-
+    //Fonction de déconnexion pour revenir à la page de connexion.
     public void deconnexion(View view){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_NEW_TASK);

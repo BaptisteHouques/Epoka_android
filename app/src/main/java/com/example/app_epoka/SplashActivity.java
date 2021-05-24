@@ -11,6 +11,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        //Timer avant envoi sur l'activité Main.
         CountDownTimer timer = new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long l) {
@@ -19,6 +20,7 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onFinish() {
+                //Fonction envoyant sur l'activité Main.
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

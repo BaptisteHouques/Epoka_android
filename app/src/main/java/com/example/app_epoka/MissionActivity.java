@@ -39,7 +39,7 @@ public class MissionActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mission);
-
+        //Création d'une liste qui stocke les villes de la base de données.
         list = new ArrayList<LibelleEtId>();
 
         urlServiceWeb = "http://192.168.1.10/Epoka_Web/Services/villes.php";
@@ -49,7 +49,7 @@ public class MissionActivity extends Activity {
         ville = (Spinner) findViewById(R.id.sVille);
         ville.setAdapter(adapter);
     }
-
+    //Class qui remplie le spinner.
     public class LibelleEtId{
         public String libelle;
         public int cp;
@@ -69,19 +69,20 @@ public class MissionActivity extends Activity {
             return resultat;
         }
     }
-
+    // Fonction qui permet l'ajout de la mission choisie sans la base de données.
     public void ajoutMission(View view){
+        //Récupération des dates choisies par l'utilisateur.
         EditText dateDebut = (EditText) findViewById(R.id.et_Date1);
         EditText dateFin = (EditText) findViewById(R.id.et_Date2);
-
+        //Récupération de l'id de la ville sélectionnée par l'utilisateur.
         LibelleEtId libelleEtId = (LibelleEtId) ville.getSelectedItem();
         int idVille = libelleEtId.id;
-
+        //Récupération de l'id de l'utilisateur.
         Intent intentId = getIntent();
         id = intentId.getIntExtra("id", 0);
 
         String urlServiceAjout = "http://192.168.1.10/Epoka_Web/Services/missions.php?dateDebut=" + dateDebut.getText() + "&dateFin=" + dateFin.getText() +"&destination=" + idVille + "&salarie=" + id;
-
+        //Appele du service.
         InputStream is = null;
         String result = "";
         try {
@@ -100,7 +101,7 @@ public class MissionActivity extends Activity {
             Log.e("log-tag", "Erreur pendant la récupération des données : " + expt.toString());
         }
     }
-
+    //Fonction servant à récupérer les données JSON des services.
     private void getServerDataJson(String urlString) {
         InputStream is = null;
         String result = "";
